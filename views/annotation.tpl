@@ -108,6 +108,9 @@ print(data)
         note = ""
     end
 
+    
+    
+    json_file_path = f'./../../data/{data[3]}.json'
 %>
 
 
@@ -119,153 +122,197 @@ print(data)
 
 
     <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1 class="h4">Annotation {{data[3]}}</h1>
+                <div class="mb-3">
+                    %if empty_data == False:
+                    <a class="{{was_fetched_button_style}}" href="/../../fetch/{{data[1]}}/{{data[3]}}">{{was_fetched_button_text}}</a>
+                    <a class="btn btn-warning" href="https://www.reddit.com/user/{{data[3]}}" target="_blank">Reddit u/{{data[3]}}</a>
 
-	    <h1 class="h4">Annotation {{data[3]}}</h1>
-        <div class="mb-3">
-            %if empty_data == False:
-            <a class="{{was_fetched_button_style}}" href="/../../fetch/{{data[1]}}/{{data[3]}}">{{was_fetched_button_text}}</a>
-            <a class="btn btn-primary" href="https://www.reddit.com/user/{{data[3]}}" target="_blank">Reddit u/{{data[3]}}</a>
-
-                %if data[4] == 1:
-                    <a class="btn btn-primary" href="/../data/{{data[3]}}.json">{{data[3]}}.json</a>
-                    <a class="btn btn-primary" href="/../data/{{data[3]}}.json" target="_blank">open Tab {{data[3]}}.json</a>
-                %end 
-            % end
+                        %if data[4] == 1:
+                            <a class="btn btn-primary" href="/../data/{{data[3]}}.json">{{data[3]}}.json</a>
+                            <a class="btn btn-primary" href="/../data/{{data[3]}}.json" target="_blank">open Tab {{data[3]}}.json</a>
+                        %end 
+                    % end
+                </div>
+            </div>
         </div>
 
 
-        <form class="" action ="/save" method="post">
-            <!-- ID -->
-            <div class="form-group">
-                <label for="id">ID</label>
-                <input type="text" class="form-control" id="id" name="id" value="{{data[0]}}">
-            </div>
-            
-            <!-- Unnamed -->
-            <div class="form-group">
-                <label for="unnamed">Unnamed <span class="text-danger">(required)</span></label>
-                <input type="number" class="form-control" id="unnamed" name="unnamed" value="{{data[1]}}" required>
-            </div>
-            
-            <!-- Annotator -->
-            <div class="form-group">
-                <label for="annotator">Annotator</label>
-                <%
-                    annotator = ''
 
-                    #print(annotator)
-                    #print(type(annotator))
-                    #print()
-                    #print(data[2])
-                    #print(type(data[2]))
-                    #print()
-                    #print(annotator_marker)
-                    #print(annotator_marker)
-
-                    if annotator_marker is not None and annotator_marker != '':
-                        annotator = annotator_marker
-                    elif data[2] is not None and data[2] != '': 
-                        annotator = data[2]
-                   
-                    end
-                %>
-                <input type="text" class="form-control" id="annotator" name="annotator" value="{{annotator}}">
-            </div>
-            
-            <!-- User ID -->
-            <div class="form-group">
-                <label for="user_id">User ID <span class="text-danger">(required)</span></label>
-                <input type="text" class="form-control" id="user_id" name="user_id" value="{{data[3]}}" required>
-            </div>
-            
-            <!-- Checkboxes for Boolean Fields -->
-            <div class="my-2">
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="was_fetched" name="was_fetched" {{was_fetched_checked}}>
-                    <label class="form-check-label" for="was_fetched">was fetched</label>
-                    <button type="button" class="btn btn-info " data-bs-toggle="tooltip" data-bs-placement="right" 
-				            data-bs-title="will autmaticaly updated if you click 'fetch now', unnamed and user id need to be in the system">?</button>
-                </div>
-
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="is_duplicate" name="is_duplicate" {{is_duplicate_checked}}>
-                    <label class="form-check-label" for="is_duplicate">Is Duplicate</label>
-                    <button type="button" class="btn btn-info " data-bs-toggle="tooltip" data-bs-placement="right" 
-				            data-bs-title="if the user_id is more then once in the system">?</button>
-                </div>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="is_deleted" name="is_deleted" {{is_deleted_checked}}>
-                    <label class="form-check-label" for="is_deleted">Is Deleted</label>
-                </div>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="is_banned" name="is_banned" {{is_banned_checked}}>
-                    <label class="form-check-label" for="is_banned">Is Banned</label>
-                </div>
-
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="human" name="human" {{human_checked}}>
-                    <label class="form-check-label" for="human">Human</label>
-                </div>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="bot" name="bot" {{bot_checked}}>
-                    <label class="form-check-label" for="bot">Bot</label>
-                </div>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="like" name="like" {{like_checked}}>
-                    <label class="form-check-label" for="like">Like</label>
-                </div>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="repost" name="repost" {{repost_checked}}>
-                    <label class="form-check-label" for="repost">Repost</label>
-                </div>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="derived_content" name="derived_content" {{derived_content_checked}}>
-                    <label class="form-check-label" for="derived_content">Derived Content</label>
-                </div>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="repeated_posts" name="repeated_posts" {{repeated_posts_checked}}>
-                    <label class="form-check-label" for="repeated_posts">Repeated Posts</label>
-                </div>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="fluent_content" name="fluent_content" {{fluent_content_checked}}>
-                    <label class="form-check-label" for="fluent_content">Fluent Content</label>
-                </div>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="active_inactivity_period" name="active_inactivity_period" {{active_inactivity_period_checked}}>
-                    <label class="form-check-label" for="active_inactivity_period">Active Inactivity Period</label>
-                </div>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="high_frequency_activity" name="high_frequency_activity" {{high_frequency_activity_checked}}>
-                    <label class="form-check-label" for="high_frequency_activity">High Frequency Activity</label>
+    <div class="row">
+        <div class="col">
+            <form class="" action ="/save" method="post">
+                <!-- ID -->
+                <div class="form-group">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" value="{{data[0]}}">
                 </div>
                 
-                <!-- Note -->
+                <!-- Unnamed -->
                 <div class="form-group">
-                    <label for="note">Note</label>
-                    <textarea class="form-control" id="note" rows="3" name="note">{{note}}</textarea>
+                    <label for="unnamed">Unnamed <span class="text-danger">(required)</span></label>
+                    <input type="number" class="form-control" id="unnamed" name="unnamed" value="{{data[1]}}" required>
                 </div>
-            </div>
+                
+                <!-- Annotator -->
+                <div class="form-group">
+                    <label for="annotator">Annotator</label>
+                    <%
+                        annotator = ''
+                        if annotator_marker is not None and annotator_marker != '':
+                            annotator = annotator_marker
+                        elif data[2] is not None and data[2] != '': 
+                            annotator = data[2]
+                    
+                        end
+                    %>
+                    <input type="text" class="form-control" id="annotator" name="annotator" value="{{annotator}}">
+                </div>
+                
+                <!-- User ID -->
+                <div class="form-group">
+                    <label for="user_id">User ID <span class="text-danger">(required)</span></label>
+                    <input type="text" class="form-control" id="user_id" name="user_id" value="{{data[3]}}" required>
+                </div>
+                
+                <!-- Checkboxes for Boolean Fields -->
+                <div class="my-2">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="was_fetched" name="was_fetched" {{was_fetched_checked}}>
+                        <label class="form-check-label" for="was_fetched">was fetched</label>
+                        <button type="button" class="btn btn-info " data-bs-toggle="tooltip" data-bs-placement="right" 
+                                data-bs-title="will autmaticaly updated if you click 'fetch now', unnamed and user id need to be in the system">?</button>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="is_duplicate" name="is_duplicate" {{is_duplicate_checked}}>
+                        <label class="form-check-label" for="is_duplicate">Is Duplicate</label>
+                        <button type="button" class="btn btn-info " data-bs-toggle="tooltip" data-bs-placement="right" 
+                                data-bs-title="if the user_id is more then once in the system">?</button>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="is_deleted" name="is_deleted" {{is_deleted_checked}}>
+                        <label class="form-check-label" for="is_deleted">Is Deleted</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="is_banned" name="is_banned" {{is_banned_checked}}>
+                        <label class="form-check-label" for="is_banned">Is Banned</label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="human" name="human" {{human_checked}}>
+                        <label class="form-check-label" for="human">Human (sound fluent/human like)</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="bot" name="bot" {{bot_checked}}>
+                        <label class="form-check-label" for="bot">Bot</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="like" name="like" {{like_checked}}>
+                        <label class="form-check-label" for="like">Like</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="repost" name="repost" {{repost_checked}}>
+                        <label class="form-check-label" for="repost">Repost</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="derived_content" name="derived_content" {{derived_content_checked}}>
+                        <label class="form-check-label" for="derived_content">Derived Content (copy & paste)</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="repeated_posts" name="repeated_posts" {{repeated_posts_checked}}>
+                        <label class="form-check-label" for="repeated_posts">Repeated Posts</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="fluent_content" name="fluent_content" {{fluent_content_checked}}>
+                        <label class="form-check-label" for="fluent_content">Fluent Content</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="active_inactivity_period" name="active_inactivity_period" {{active_inactivity_period_checked}}>
+                        <label class="form-check-label" for="active_inactivity_period">Active Inactivity Period (large Inactivity and then activity)</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="high_frequency_activity" name="high_frequency_activity" {{high_frequency_activity_checked}}>
+                        <label class="form-check-label" for="high_frequency_activity">High Frequency Activity</label>
+                    </div>
+                    
+                    <!-- Note -->
+                    <div class="form-group">
+                        <label for="note">Note:</label>
+                        <textarea class="form-control" id="note" rows="3" name="note">{{note}}</textarea>
+                    </div>
+                </div>
 
 
-            <input type="hidden" id="anno_type" name="anno_type" value="{{anno_type}}">
-            <input type="hidden" id="annotator_marker" name="annotator_marker" value="{{annotator_marker}}">
+                <input type="hidden" id="anno_type" name="anno_type" value="{{anno_type}}">
+                <input type="hidden" id="annotator_marker" name="annotator_marker" value="{{annotator_marker}}">
 
-            <!-- Submit Button -->
-            <div class="my-3">
-            
-            <button type="submit" class="btn btn-success me-5">Save</button>
-            <button type="reset" class="btn btn-danger ms-5 ms-5">Reset form</button>
+                <!-- Submit Button -->
+                <div class="my-3">
+                
+                <button type="submit" class="btn btn-success">Save</button>
+                <button type="reset" class="btn btn-danger">Reset form</button>
 
 
-            <a class="btn btn-primary ms-5 ms-5" href="/next?annotator={{annotator}}">next unannotated entry</a>
-            <a class="btn btn-success ms-5 ms-5" href="/new?annotator={{annotator}}&anno_type=new">add new annotated entry</a>
-            
-            
-            </div>
-        </form>
+                <a class="btn btn-primary" href="/next?annotator={{annotator}}">next entry</a>
+                <a class="btn btn-success" href="/new?annotator={{annotator}}&anno_type=new">add new entry</a>
+                
+                
+                </div>
+            </form>
+        </div>
+
+        <div class="col">
+            <h2 class="h6">json <button type="button" class="btn btn-info " data-bs-toggle="tooltip" data-bs-placement="right" 
+                                data-bs-title="if json file has only username and rest has null-values user is deleted, banned or renamed">?</button></h2>
+            <pre>
+                <div w3-include-html="{{json_file_path}}"></div> 
+            </pre>
+        </div>
+
     </div>
 
-<div class="position-absolute top-50 end-0 translate-middle-y">
-    <img src="./../../static/img/collecting_bot_data_reddit.png" class="rounded float-end" style="width:900px" alt="collecting bot data reddit">
 
-    </div>
+
+    
+
+
+
+<!-- source https://www.w3schools.com/howto/howto_html_include.asp -->
+<script>
+    function includeHTML() {
+    var z, i, elmnt, file, xhttp;
+    /*loop through a collection of all HTML elements:*/
+    z = document.getElementsByTagName("*");
+    for (i = 0; i < z.length; i++) {
+        elmnt = z[i];
+        /*search for elements with a certain atrribute:*/
+        file = elmnt.getAttribute("w3-include-html");
+        if (file) {
+        /*make an HTTP request using the attribute value as the file name:*/
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4) {
+            if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+            if (this.status == 404) {elmnt.innerHTML = "{{data[3]}}.json not found or fetched";}
+            /*remove the attribute, and call this function once more:*/
+            elmnt.removeAttribute("w3-include-html");
+            includeHTML();
+            }
+        }      
+        xhttp.open("GET", file, true);
+        xhttp.send();
+        /*exit the function:*/
+        return;
+        }
+    }
+    };
+</script>
+
+<script>
+    includeHTML();
+</script>
+
+
