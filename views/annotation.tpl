@@ -183,11 +183,15 @@ print(data)
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="was_fetched" name="was_fetched" {{was_fetched_checked}}>
                     <label class="form-check-label" for="was_fetched">was fetched</label>
+                    <button type="button" class="btn btn-info " data-bs-toggle="tooltip" data-bs-placement="right" 
+				            data-bs-title="will autmaticaly updated if you click 'fetch now', unnamed and user id need to be in the system">?</button>
                 </div>
 
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="is_duplicate" name="is_duplicate" {{is_duplicate_checked}}>
                     <label class="form-check-label" for="is_duplicate">Is Duplicate</label>
+                    <button type="button" class="btn btn-info " data-bs-toggle="tooltip" data-bs-placement="right" 
+				            data-bs-title="if the user_id is more then once in the system">?</button>
                 </div>
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="is_deleted" name="is_deleted" {{is_deleted_checked}}>
@@ -259,4 +263,9 @@ print(data)
             
             </div>
         </form>
+    </div>
+
+<div class="position-absolute top-50 end-0 translate-middle-y">
+    <img src="./../../static/img/collecting_bot_data_reddit.png" class="rounded float-end" style="width:900px" alt="collecting bot data reddit">
+
     </div>
