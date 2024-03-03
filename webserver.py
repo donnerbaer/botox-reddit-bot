@@ -6,7 +6,7 @@ import re
 
 database_path = "database/database.db"
 
-
+# #####################   HELPER   #####################
 
 def parameter_split(parameter:str) -> dict:
     parameter = parameter.replace("?","")
@@ -33,6 +33,10 @@ def is_in_database(unnamed:int, user_id:str) -> bool:
         return False
     return True
 
+
+
+
+# #####################   ROUTING   #####################
 
 @route('/')
 def index():
@@ -226,6 +230,11 @@ def search_result():
 
 
 
+
+
+
+# #####################   ERROR   #####################
+
 @error(404)
 def error404(error):
     return template('error', errorCode="404", errorMsg='Page not found')
@@ -237,10 +246,13 @@ def error500(error):
 
 
 
+
+
+# #####################   RESOURCES   #####################
+
 @get("/static/css/<filepath:re:.*\\.css>")
 def css(filepath):
     return static_file(filepath, root="static/css")
-
 
 
 @get("/static/img/<filepath:re:.*\\.(jpg|jpeg|png|gif|ico|svg)>")
