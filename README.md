@@ -4,7 +4,7 @@
 
     pip install sqlite3
     pip install requests
-    pip install bootle
+    pip install bottle
 
 run `python create_database.py`
 open jupyter notebook `transform.ipynb`, change your `.tsv`-file
