@@ -1,0 +1,6 @@
+
+/dev
+__pycache__
+**/*.db
+*.tsv
+data/*.json
