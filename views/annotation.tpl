@@ -1,13 +1,12 @@
 <%
-title = 'new annotation' 
-activeNav = 'new'
-if data is not None:
-    title = data[3]
-    activeNav = 'random'
+    title = 'new annotation' 
+    activeNav = 'new'
+    if data is not None:
+        title = data[3]
+        activeNav = 'random'
+    end
 
-
-end
-print(data)
+    print(data) 
 %>
 
 % rebase('base.tpl', title=f'Annotation {title}', activeNav=activeNav)
@@ -18,6 +17,14 @@ print(data)
         data = ['', None, None, '', None, None, None, None, None, None, None, None, None, None, None, None, None, None]
         empty_data = True
     end
+
+    annotator = ''
+    if annotator_marker is not None and annotator_marker != '':
+        annotator = annotator_marker
+    elif data[2] is not None and data[2] != '': 
+        annotator = data[2]
+    end
+
 
     was_fetched_button_style = "btn btn-secondary"
     was_fetched_button_text = "fetch again"
@@ -39,14 +46,14 @@ print(data)
     end
     
 
-    is_banned_checked = "checked"
+    is_deleted_checked = "checked"
     if data[6] == 0 or data[6] is None or data[6] is False or data[6] == "":
-        is_banned_checked = ""
+        is_deleted_checked = ""
     end
     
-    is_deleted_checked = "checked"
+    is_banned_checked = "checked"
     if data[7] == 0 or data[7] is None or data[7] is False or data[7] == "":
-        is_deleted_checked = ""
+        is_banned_checked = ""
     end
 
     human_checked = "checked"
@@ -127,7 +134,7 @@ print(data)
                 <h1 class="h4">Annotation {{data[3]}}</h1>
                 <div class="mb-3">
                     %if empty_data == False:
-                    <a class="{{was_fetched_button_style}}" href="/../../fetch/{{data[1]}}/{{data[3]}}">{{was_fetched_button_text}}</a>
+                    <a class="{{was_fetched_button_style}}" href="/../../fetch/{{data[1]}}/{{data[3]}}?annotator={{annotator}}">{{was_fetched_button_text}}</a>
                     <a class="btn btn-warning" href="https://www.reddit.com/user/{{data[3]}}" target="_blank">Reddit u/{{data[3]}}</a>
 
                         %if data[4] == 1:
@@ -159,15 +166,6 @@ print(data)
                 <!-- Annotator -->
                 <div class="form-group">
                     <label for="annotator">Annotator</label>
-                    <%
-                        annotator = ''
-                        if annotator_marker is not None and annotator_marker != '':
-                            annotator = annotator_marker
-                        elif data[2] is not None and data[2] != '': 
-                            annotator = data[2]
-                    
-                        end
-                    %>
                     <input type="text" class="form-control" id="annotator" name="annotator" value="{{annotator}}">
                 </div>
                 
@@ -188,8 +186,14 @@ print(data)
 
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" id="is_duplicate" name="is_duplicate" {{is_duplicate_checked}}>
+                        <%
+                            is_duplicate_class = 'btn-info'
+                            if is_duplicate_checked == 'checked':
+                                is_duplicate_class = 'btn-danger'
+                            end
+                        %>
                         <label class="form-check-label" for="is_duplicate">Is Duplicate</label>
-                        <button type="button" class="btn btn-info " data-bs-toggle="tooltip" data-bs-placement="right" 
+                        <button type="button" class="btn {{is_duplicate_class}}" data-bs-toggle="tooltip" data-bs-placement="right" 
                                 data-bs-title="if the user_id is more then once in the system">?</button>
                     </div>
                     <div class="form-check">
@@ -203,11 +207,11 @@ print(data)
 
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" id="human" name="human" {{human_checked}}>
-                        <label class="form-check-label" for="human">Human (sound fluent/human like)</label>
+                        <label class="form-check-label" for="human">Human (could be)</label>
                     </div>
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" id="bot" name="bot" {{bot_checked}}>
-                        <label class="form-check-label" for="bot">Bot</label>
+                        <label class="form-check-label" for="bot">Bot (could be)</label>
                     </div>
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" id="like" name="like" {{like_checked}}>
