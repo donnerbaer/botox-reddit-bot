@@ -231,7 +231,7 @@
                     </div>
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" id="fluent_content" name="fluent_content" {{fluent_content_checked}}>
-                        <label class="form-check-label" for="fluent_content">Fluent Content</label>
+                        <label class="form-check-label" for="fluent_content">Fluent in language</label>
                     </div>
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" id="active_inactivity_period" name="active_inactivity_period" {{active_inactivity_period_checked}}>
