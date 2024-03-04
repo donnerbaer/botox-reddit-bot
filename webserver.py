@@ -185,6 +185,8 @@ def annotation(unnamed:int = '', user_id:str = ''):
 
 @route('/fetch/<unnamed:int>/<user_id>')
 def fetch(unnamed:int, user_id:str):
+    parameter = parameter_split(request.query_string)
+
     user_metadata = fetch_user_metadata.fetch_user_metadata(user_id)
     success = None
     if user_metadata != -1:
@@ -205,7 +207,7 @@ def fetch(unnamed:int, user_id:str):
     connection.commit()
     cursor.close()
     connection.close()
-    redirect('/annotation/{}/{}'.format(unnamed, user_id))
+    redirect('/annotation/{}/{}?annotator={}'.format(unnamed, user_id, parameter.get('annotator')))
 
 
 
