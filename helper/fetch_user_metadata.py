@@ -101,7 +101,7 @@ def fetch_user_metadata(username):
 
 def save_metadata_to_json(username, user_metadata):
     if user_metadata:
-        filename = f"data/{username}.json"
+        filename = f"./json/{username}.json"
         with open(filename, 'w') as f:
             json.dump(user_metadata, f, indent=4)
         return True
