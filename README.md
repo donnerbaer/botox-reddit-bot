@@ -1,40 +1,82 @@
+#
+
++ Install
++ Insert data
++ Run Website
++ Annotation
++ Patchnotes
++ TODO
++ After manuel classificiation
 
 
-# install
+# Install
+
+Jupyter Notebook required for transform & load `.tsv` into database
 
     pip install sqlite3
     pip install requests
     pip install bottle
 
+
+
 1. run `python create_database.py`
+
+# Insert data
+
 2. [optional] using `.tsv`-files
     1. put your `.tsv`-files in `/tsv`
     2. open jupyter notebook `transform.ipynb`, change your `.tsv`-file
-    3. run `transform.ipynb`
+    3. run Jupyter Notebook `transform.ipynb`
+
+3. run `fetch_json.py`  (Saves all jsons from existing accounts in your database)
+4. run `update_fetched.py` (Updates fetch status in your database, if json file is in `/json`)
 
 
-# run website
+# Run website
 
-1. run `python webserver.py`
-2. open `localhost` in your browser
+5. run `python webserver.py`
+6. open `localhost` in your browser
 
-# annotation
+# Annotation
 
-1. click on `annotate` in menu 
-2. click `fetch now` (button yellow) after fetch it becomes grey (refetch is possible)
-3. type your name in Annotator (name will pre-fill for functions `next entry` / `add new entry` after `save`, but will not saved automatically for the next annotations)
+7. click on `annotate` in menu 
+8. click `fetch now` (button yellow) after fetch it becomes grey (refetch is possible)
+9. type your name in Annotator (name will pre-fill for functions `next entry` / `add new entry` after `save`, but will not saved automatically for the next annotations)
     1. if json is empty: account is does not exists 
     2. if json is there, but only username is there and the other key/values are null: accout is bannend
     3. rest has data
-4. is duplicate is active, the user_id (account name) was more than once in the `.tsv`-file
+10. is duplicate is active, the user_id (account name) was more than once in the `.tsv`-file
 
 + click `save`
 + after save you can goto `next entry` or `add new entry`
 
-# after manuel classification
+# After manuel classification
 
-your json file are in `/data`
+your json file are in `/json`
 your sqlite3 database file is in `/database`
+
+
+# Patch notes
++ 0.2.0a
+    1. database
+        1. ddl is now in `/database/ddl.sql`
+        2. table reddit_bots
+            + removed column: id
+            + removed column: unnamed
+            + removed column: is_duplicate
+            + change primary key to (annotator, user_is)
+        3. add table system (for saving version informations)
+            + cols (id, key, value)
+                + Example (1, "Version", "0.2.0a") 
+        4. add `/database/dml.sql` for some helpful SQL DMLs 
+
+    2. json-files 
+        1. direcotry rename from ~~/data~~ to `/json` 
+    
+    3. Menu
+        1. database views are group now
+    
+
 
 
 # TODO (future me problems)
@@ -45,3 +87,5 @@ your sqlite3 database file is in `/database`
 + make the image on `/annotation` pretty (html/css)
 + add dashboard (`chart.js`?)
 + add `.json`-file preview on `/annotation` (using columns [form / json-preview])
++ add database migration script for `v0.1.0a` to `v0.2.0a`
+
