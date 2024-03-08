@@ -5,12 +5,20 @@
 		['','Home'],
 		['new','new annotation'],
 		['random','annotate'],
-        ['database','Show Database'],
+    #    ['database','Show Database'],
+		['!DROPDOWN','DATABASE'],
+	#	 ['database/not_annotated','Data (not annotated)'],
+	#	 ['database/has_annotation','Data (annotated)'],
+	#	 ['database/has_fetched','Data (fetched)'],
+		['search','Search']
+    ]
+
+	navigationListDatabase=[
+		['database','Show Database'],
 		['database/not_annotated','Data (not annotated)'],
 		['database/has_annotation','Data (annotated)'],
-		['search','Search']
-		
-    ]
+		['database/has_fetched','Data (fetched)']
+	]
 
 %>
 
@@ -26,17 +34,31 @@
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
 				%for entry in navigationList:
-					<% 
+					<%  navClass = ""
 						if activeNavigation == entry[0]:
 							navClass = "btn-secondary active"
-						else:
-							navClass = "btn-dark"
 						end
 					%>
 
-					<li class="nav-item btn rounded-0 border-0 {{ navClass }}">
-						<a class="nav-link active" href="../../{{entry[0]}}">{{entry[1]}}</a>
-					</li>
+					%if entry[0] != '!DROPDOWN':
+						<li class="nav-item btn {{ navClass }}">
+							<a class="nav-link active" href="../../{{entry[0]}}">{{entry[1]}}</a>
+						</li>
+					%elif entry[0] == '!DROPDOWN' and entry[1] == 'DATABASE':
+						<li class="nav-item dropdown btn {{ navClass }}">
+							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Database Views</a>
+							<ul class="dropdown-menu">
+							%for db_entry in navigationListDatabase:
+								<%  navClass = ""
+									if activeNavigation == db_entry[0]:
+										navClass = "btn-secondary active"
+									end
+								%>
+								<li><a class="dropdown-item btn" href="../../{{db_entry[0]}}">{{db_entry[1]}}</a></li>
+							% end
+							</ul>
+						</li>
+					%end
 				%end
 
 
