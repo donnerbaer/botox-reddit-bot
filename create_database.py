@@ -1,42 +1,37 @@
 import sys
 import sqlite3
+import configparser
 
 
 def create_database(db_name:str = "database") -> None:
-    query_create = """
-            CREATE TABLE IF NOT EXISTS reddit_bots(
-                id INTEGER,
-                unnamed INTEGER,
-                annotator TEXT,
-                user_id TEXT,
-                was_fetched INTEGER,
-                is_duplicate INTEGER,
-                is_deleted INTEGER,
-                is_banned INTEGER,
-                human INTEGER,
-                bot INTEGER,
-                like INTEGER,
-                repost INTEGER,
-                derived_content INTEGER,
-                repeated_posts INTEGER,
-                fluent_content INTEGER,
-                active_inactivity_period INTEGER,
-                high_frequency_activity INTEGER,
-                note TEXT,
-                PRIMARY KEY(unnamed, user_id)
-                );
-            """
-
-    connection = sqlite3.connect(f"database/{db_name}.db")
-    cursor = connection.cursor()
-    cursor.execute(query_create)
+    file = open(config['DATABASE']['DDL'], encoding='utf-8')
+    query_create = file.read()
+    cursor.executescript(query_create)
     connection.commit()
+
+
+def insert_system_information() -> None:
+    values = ("database version",config['SYSTEM']['VERSION'])
+    query = f""" INSERT INTO system (id, key, value) 
+            VALUES(1, ?, ?)
+            ;
+            """
+    cursor.execute(query,(values))
+    connection.commit()
+
+
+
+if __name__ == '__main__':
+
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    connection = sqlite3.connect(config['DATABASE']['FILE'])
+    cursor = connection.cursor()
+
+
+    create_database()
+    insert_system_information()
+
+
     cursor.close()
     connection.close()
-
-
-if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        create_database(sys.argv[1])
-    create_database()
-    
