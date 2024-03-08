@@ -3,6 +3,8 @@
 __pycache__
 **/*.db
 *.tsv
+!example.tsv
+
 **/*.json
 test.ipynb
 
