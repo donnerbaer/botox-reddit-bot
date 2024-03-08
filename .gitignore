@@ -3,6 +3,9 @@
 __pycache__
 **/*.db
 *.tsv
-data/*.json
-*.sql
+**/*.json
+test.ipynb
 
+/app
+/update
+update.py
