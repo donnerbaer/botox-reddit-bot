@@ -76,6 +76,12 @@ your sqlite3 database file is in `/database`
     3. Menu
         1. database views are group now
     
++ 0.2.1-a
+    1. index page `/`
+        + Addition of a table with the number of annotations and a link to the annotator's database with/not annotated entries
+    2. Added `/database/<view>/<annotator>`
+        + Add parameter for annotation, it is now possible to get a prefilled annotator when using `/` -> Column "Database: still has to go" -> Show Database `/database/not_annotated/<annotator>` -> Button: Annotate
+    3. Bug fixed, the `.json` button was not displayed when "as fetched" was active
 
 
 
@@ -84,8 +90,8 @@ your sqlite3 database file is in `/database`
 + write documentation
 + implement search function (for the template)
 + add pagenation for `/database`-sites
-+ make the image on `/annotation` pretty (html/css)
 + add dashboard (`chart.js`?)
 + add `.json`-file preview on `/annotation` (using columns [form / json-preview])
 + add database migration script for `v0.1.0a` to `v0.2.0a`
++ add configuration .json for database & annotation form
 
