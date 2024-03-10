@@ -15,7 +15,6 @@
     </thead>
     <tbody> 
         %for annotator in data.get('annotator_numbers'):
-        <pre>
         <tr>
             <td>{{annotator[0]}}</td>
             <td><a class="btn btn-primary" href="database/has_annotation/{{annotator[0]}}">Show Database <span class="badge text-bg-secondary">{{annotator[1]}}</span></a></td>
