@@ -123,7 +123,7 @@
                     <a class="{{was_fetched_button_style}}" href="/../../fetch/{{data[1]}}?annotator={{annotator}}">{{was_fetched_button_text}}</a>
                     <a class="btn btn-warning" href="https://www.reddit.com/user/{{data[1]}}" target="_blank">Reddit u/{{data[1]}}</a>
 
-                        %if data[4] == 1:
+                        %if data[2] == 1:
                             <a class="btn btn-primary" href="/../data/{{data[1]}}.json">{{data[1]}}.json</a>
                             <a class="btn btn-primary" href="/../data/{{data[1]}}.json" target="_blank">open Tab {{data[1]}}.json</a>
                         %end 
@@ -160,7 +160,7 @@
                     </div>
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" id="is_deleted" name="is_deleted" {{is_deleted_checked}}>
-                        <label class="form-check-label" for="is_deleted">Is Deleted</label>
+                        <label class="form-check-label" for="is_deleted">Is Deleted, Renamed or never existed</label>
                     </div>
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" id="is_banned" name="is_banned" {{is_banned_checked}}>
