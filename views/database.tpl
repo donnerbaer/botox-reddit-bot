@@ -22,7 +22,12 @@
 
 %for entry in data:    
 <tr>
-    <td><a class="btn btn-primary" href="../annotation/{{entry[1]}}/{{entry[0]}}">Annotate</a></td>
+<%  parameter = ""
+    if annotator_marker != "None" and annotator_marker is not None:
+        parameter = f"?annotator={annotator_marker}"
+    end
+%>
+    <td><a class="btn btn-primary" href="/../../annotation/{{entry[1]}}/{{entry[0]}}{{parameter}}">Annotate</a></td>
     %for datapoint in entry:
         <%
         if datapoint == None:

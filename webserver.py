@@ -44,7 +44,19 @@ def is_in_database(annotator:str, user_id:str) -> bool:
 
 @route('/')
 def index():
-    return template('index')
+    connection = sqlite3.connect(database_path)
+    cursor = connection.cursor()
+    data = {}
+    data['annotator_numbers'] = cursor.execute("""
+        SELECT DISTINCT annotator, COUNT(annotator) 
+        FROM reddit_bots 
+        WHERE annotator IS NOT NULL GROUP BY annotator
+        """).fetchall()
+    number_not_annotated = cursor.execute("""SELECT COUNT(DISTINCT user_id) FROM reddit_bots """).fetchone()
+    data['number_not_annotated'] = number_not_annotated[0]
+    cursor.close()
+    connection.close()
+    return template('index',data=data)
 
 
 @route('/random')
@@ -150,32 +162,38 @@ def database():
     data = cursor.execute("""SELECT * FROM reddit_bots""").fetchall()
     cursor.close()
     connection.close()
-    return template('database', data=data, activeNav="database")
+    return template('database', data=data, activeNav="database", annotator_marker=None)
 
 
 @route('/database/not_annotated')
-def database():
+@route('/database/not_annotated/<annotator>')
+def database(annotator:str = None):
     connection = sqlite3.connect(database_path)
     cursor = connection.cursor()
-    data = cursor.execute("""SELECT * FROM reddit_bots WHERE annotator IS NULL""").fetchall()
+    if annotator is None:
+        data = cursor.execute("""SELECT * FROM reddit_bots WHERE annotator IS NULL""").fetchall()
+    else:
+        data = cursor.execute("""SELECT * FROM reddit_bots WHERE user_id NOT IN (SELECT DISTINCT user_id 
+                FROM reddit_bots 
+                WHERE annotator = ?
+                ) """, (annotator,)).fetchall()
     cursor.close()
     connection.close()
-    return template('database', data=data, activeNav="database/not_annotated")
+    return template('database', data=data, activeNav="database/not_annotated", annotator_marker=annotator)
 
 
 @route('/database/has_annotation')
-def database():
+@route('/database/has_annotation/<annotator>')
+def database(annotator:str = None):
     connection = sqlite3.connect(database_path)
     cursor = connection.cursor()
-    data = cursor.execute('''
-                SELECT * FROM reddit_bots WHERE 
-                annotator IS NOT NULL
-                OR
-                annotator != ""
-            ''').fetchall()
+    if annotator is None:
+        data = cursor.execute('''SELECT * FROM reddit_bots WHERE annotator IS NOT NULL OR annotator != "" ''').fetchall()
+    else:
+        data = cursor.execute('''SELECT * FROM reddit_bots WHERE annotator = ? ''', (annotator,)).fetchall()
     cursor.close()
     connection.close()
-    return template('database', data=data, activeNav="database/has_annotation")
+    return template('database', data=data, activeNav="database/has_annotation", annotator_marker=annotator)
 
 
 @route('/database/has_fetched')
