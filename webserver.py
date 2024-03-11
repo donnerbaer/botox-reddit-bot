@@ -206,7 +206,7 @@ def database():
             ''').fetchall()
     cursor.close()
     connection.close()
-    return template('database', data=data, activeNav="database/has_annotation")
+    return template('database', data=data, activeNav="database/has_annotation", annotator_marker=None)
 
 
 
