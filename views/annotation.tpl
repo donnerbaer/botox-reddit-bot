@@ -124,8 +124,8 @@
                     <a class="btn btn-warning" href="https://www.reddit.com/user/{{data[1]}}" target="_blank">Reddit u/{{data[1]}}</a>
 
                         %if data[2] == 1:
-                            <a class="btn btn-primary" href="/../data/{{data[1]}}.json">{{data[1]}}.json</a>
-                            <a class="btn btn-primary" href="/../data/{{data[1]}}.json" target="_blank">open Tab {{data[1]}}.json</a>
+                            <a class="btn btn-primary" href="/../json/{{data[1]}}.json">{{data[1]}}.json</a>
+                            <a class="btn btn-primary" href="/../json/{{data[1]}}.json" target="_blank">open Tab {{data[1]}}.json</a>
                         %end 
                     % end
                 </div>
