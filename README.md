@@ -56,33 +56,6 @@ your json file are in `/json`
 your sqlite3 database file is in `/database`
 
 
-# Patch notes
-+ 0.2.0a
-    1. database
-        1. ddl is now in `/database/ddl.sql`
-        2. table reddit_bots
-            + removed column: id
-            + removed column: unnamed
-            + removed column: is_duplicate
-            + change primary key to (annotator, user_is)
-        3. add table system (for saving version informations)
-            + cols (id, key, value)
-                + Example (1, "Version", "0.2.0a") 
-        4. add `/database/dml.sql` for some helpful SQL DMLs 
-
-    2. json-files 
-        1. direcotry rename from ~~/data~~ to `/json` 
-    
-    3. Menu
-        1. database views are group now
-    
-+ 0.2.1-a
-    1. index page `/`
-        + Addition of a table with the number of annotations and a link to the annotator's database with/not annotated entries
-    2. Added `/database/<view>/<annotator>`
-        + Add parameter for annotation, it is now possible to get a prefilled annotator when using `/` -> Column "Database: still has to go" -> Show Database `/database/not_annotated/<annotator>` -> Button: Annotate
-    3. Bug fixed, the `.json` button was not displayed when "as fetched" was active
-
 
 
 # TODO (future me problems)
