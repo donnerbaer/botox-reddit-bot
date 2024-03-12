@@ -120,7 +120,11 @@
                 <h1 class="h4">Annotation {{data[1]}}</h1>
                 <div class="mb-3">
                     %if empty_data == False:
-                    <a class="{{was_fetched_button_style}}" href="/../../fetch/{{data[1]}}?annotator={{annotator}}">{{was_fetched_button_text}}</a>
+                        %if data[0] is not None and data[0] != '':
+                            <a class="{{was_fetched_button_style}}" href="/../../fetch/{{data[1]}}/{{data[0]}}">{{was_fetched_button_text}}</a>
+                        %else:
+                            <a class="{{was_fetched_button_style}}" href="/../../fetch/{{data[1]}}?annotator={{annotator}}">{{was_fetched_button_text}}</a>
+                        %end
                     <a class="btn btn-warning" href="https://www.reddit.com/user/{{data[1]}}" target="_blank">Reddit u/{{data[1]}}</a>
 
                         %if data[2] == 1:
