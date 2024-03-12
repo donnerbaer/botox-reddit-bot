@@ -26,7 +26,8 @@ Jupyter Notebook required for transform & load `.tsv` into database
 2. [optional] using `.tsv`-files
     1. put your `.tsv`-files in `/tsv`
     2. open jupyter notebook `transform.ipynb`, change your `.tsv`-file
-    3. run Jupyter Notebook `transform.ipynb`
+    3. maybe you have to do some changes for the `user.replaces()`
+    4. run Jupyter Notebook `transform.ipynb`
 
 3. run `fetch_json_reddit_from_database.py`  (Saves all jsons from existing accounts in your database)
 4. run `update_fetched.py` (Updates fetch status in your database, if json-files are in `/json`, if you had run `fetch_json_reddit_from_database.py`, you do not need to do it.)
