@@ -21,15 +21,15 @@ Jupyter Notebook required for transform & load `.tsv` into database
 
 1. run `python create_database.py`
 
-# Insert data
+# Insert data using reddit.com
 
 2. [optional] using `.tsv`-files
     1. put your `.tsv`-files in `/tsv`
     2. open jupyter notebook `transform.ipynb`, change your `.tsv`-file
     3. run Jupyter Notebook `transform.ipynb`
 
-3. run `fetch_json.py`  (Saves all jsons from existing accounts in your database)
-4. run `update_fetched.py` (Updates fetch status in your database, if json file is in `/json`)
+3. run `fetch_json_reddit_from_database.py`  (Saves all jsons from existing accounts in your database)
+4. run `update_fetched.py` (Updates fetch status in your database, if json-files are in `/json`, if you had run `fetch_json_reddit_from_database.py`, you do not need to do it.)
 
 
 # Run website
@@ -55,16 +55,4 @@ Jupyter Notebook required for transform & load `.tsv` into database
 your json file are in `/json`
 your sqlite3 database file is in `/database`
 
-
-
-
-# TODO (future me problems)
-
-+ write documentation
-+ implement search function (for the template)
-+ add pagenation for `/database`-sites
-+ add dashboard (`chart.js`?)
-+ add `.json`-file preview on `/annotation` (using columns [form / json-preview])
-+ add database migration script for `v0.1.0a` to `v0.2.0a`
-+ add configuration .json for database & annotation form
 
