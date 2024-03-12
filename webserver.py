@@ -52,8 +52,8 @@ def index():
         FROM reddit_bots 
         WHERE annotator IS NOT NULL GROUP BY annotator
         """).fetchall()
-    number_not_annotated = cursor.execute("""SELECT COUNT(DISTINCT user_id) FROM reddit_bots """).fetchone()
-    data['number_not_annotated'] = number_not_annotated[0]
+    data['number_not_annotated'] = cursor.execute("""SELECT COUNT(DISTINCT user_id) FROM reddit_bots """).fetchone()[0]
+    data['quick_annotation'] = cursor.execute("""SELECT COUNT(DISTINCT user_id) FROM reddit_bots WHERE annotator IS NULL AND (is_deleted = 1 OR is_banned = 1) GROUP BY annotator""").fetchone()[0]
     return template('index',data=data)
 
 
@@ -153,7 +153,7 @@ def database(annotator:str = None):
     if annotator is None:
         data = cursor.execute("""SELECT * FROM reddit_bots WHERE annotator IS NULL""").fetchall()
     else:
-        data = cursor.execute("""SELECT * FROM reddit_bots WHERE user_id NOT IN (SELECT DISTINCT user_id 
+        data = cursor.execute("""SELECT * FROM reddit_bots WHERE annotator IS NULL AND user_id NOT IN (SELECT DISTINCT user_id 
                 FROM reddit_bots 
                 WHERE annotator = ?
                 ) """, (annotator,)).fetchall()
@@ -226,6 +226,22 @@ def fetch(user_id:str, annotator:str = None):
     if annotator is None or annotator == '':
         redirect('/annotation/{}?annotator={}'.format(user_id, parameter.get('annotator')))
     redirect('/annotation/{}/{}'.format(user_id, annotator))
+
+
+@route('/quick_annotation/<annotator>')
+def quick_annotation(annotator):
+    query_select = """SELECT DISTINCT user_id, was_fetched, is_deleted, is_banned
+            FROM reddit_bots 
+            WHERE annotator IS NULL AND (is_deleted = 1 OR is_banned = 1 )"""
+    
+    users = cursor.execute(query_select).fetchall()
+
+    query_insert = """INSERT OR REPLACE INTO reddit_bots (annotator, user_id, was_fetched, is_deleted, is_banned) VALUES (?, ?, ?, ?, ?)"""
+    for user in users:
+        cursor.execute(query_insert,(annotator, user[0], user[1], user[2], user[3])) 
+        connection.commit()
+    redirect('../../')
+
 
 
 
