@@ -1,7 +1,7 @@
 % rebase('base.tpl', title='All data', activeNav=activeNav)
 
-<table class="table table-bordered">
-<tr class="table-primary">
+<table class="table table-bordered table-striped">
+<tr class="table-dark">
     <th>Show Annotation</th>
     <th>annotator (TEXT)</th>
     <th>user_id (TEXT)<br> <span class="text-danger">[Link to Reddit]</span></th>
