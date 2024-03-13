@@ -5,9 +5,12 @@ __pycache__
 *.tsv
 !example.tsv
 
-**/*.json
+json/*.json
 test.ipynb
 **test**
 
 /update
 update.py
+
+app/data.py
+config.json
